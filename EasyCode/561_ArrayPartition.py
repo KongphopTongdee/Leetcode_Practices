@@ -46,4 +46,4 @@ checkAns = Solution()
 checkAns.arrayPairSum( [1,4,3,2] )
 checkAns.arrayPairSum( [6,2,6,5,1,2] )
 checkAns.arrayPairSum( [6,2,6,5,1,2,7,8,8,8,9,10] )
-checkAns.arrayPairSum( [1,1] )
+checkAns.arrayPairSum( [1,1] )                                  #Runtime Error
