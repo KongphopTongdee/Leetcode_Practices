@@ -1,5 +1,7 @@
 class Solution:
-    def hammingDistance(self, x: int, y: int) -> int:
+    def __inti__( self ):
+        self.answer = 0
+    def hammingDistance(self, x, y ):
         pass
     
     
