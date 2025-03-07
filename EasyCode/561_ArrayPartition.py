@@ -7,10 +7,6 @@ class Solution:
         firstArray = ()
         secondArray = ()
         theRest = []
-        
-        if( len( arraySort ) == 2 ):
-            firstArray = ( arraySort[ 0 ], arraySort[ 1 ] )
-            return firstArray, secondArray, theRest
             
         if( len( arraySort ) == 4 ):
             firstArray = ( arraySort[ 0 ], arraySort[ 1 ] )
@@ -32,18 +28,29 @@ class Solution:
         
     def arrayPairSum( self, nums ):
         nums.sort()
+        print( nums )
+        
+        if( len( nums ) == 2 ):
+            print( min( nums ) )
+            return min( nums )
+        
         firstArray, secondArray, theRest = self.getFirstAndSecond( nums )
         theRest.append( firstArray )
         theRest.append( secondArray )
         sumation = 0
     
+        print( theRest )
         for amount in range( len( theRest ) ):
+            print( theRest[ amount ] )
             sumation += min( theRest[ amount ] )
             
-        return sumation
-    
+        self.answer = sumation
+        print( self.answer )
+        return self.answer
+        
 checkAns = Solution()
-checkAns.arrayPairSum( [1,4,3,2] )
-checkAns.arrayPairSum( [6,2,6,5,1,2] )
-checkAns.arrayPairSum( [6,2,6,5,1,2,7,8,8,8,9,10] )
-checkAns.arrayPairSum( [1,1] )                                  #Runtime Error please becareful with one pair
+# checkAns.arrayPairSum( [1,4,3,2] )
+# checkAns.arrayPairSum( [6,2,6,5,1,2] )
+# checkAns.arrayPairSum( [6,2,6,5,1,2,7,8,8,8,9,10] )
+# checkAns.arrayPairSum( [1,1] ) 
+checkAns.arrayPairSum( [11, 41, -9046, 2047, 1118, 8477, 8446, 279, 4925, 7380, -1719, 3855] )      #Output: 6662
