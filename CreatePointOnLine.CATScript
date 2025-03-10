@@ -1,0 +1,205 @@
+------------------------------------------Selecting a Single Edge (Line) Dynamically-----------------------------
+' Get the CATIA application
+Dim CATIA As Object
+Set CATIA = GetObject(, "CATIA.Application")
+
+' Get the active document
+Dim partDocument As Object
+Set partDocument = CATIA.ActiveDocument
+
+' Get the selection object
+Dim selection As Object
+Set selection = partDocument.Selection
+
+' Prompt user to select a line
+MsgBox "Please select a 3D line.", vbInformation, "Selection Required"
+
+Dim status As Integer
+status = selection.SelectElement2(Array("Edge"), "Select a line", False)
+
+' Check if selection is valid
+If status = 0 Then
+    ' Get the selected element
+    Dim selectedElement As Object
+    Set selectedElement = selection.Item(1).Value
+
+    ' Convert to HybridShape if necessary
+    If TypeName(selectedElement) = "Reference" Then
+        Dim part As Object
+        Set part = partDocument.Part
+        Dim hsf As Object
+        Set hsf = part.HybridShapeFactory
+        Set selectedElement = hsf.Decode(selectedElement)
+    End If
+
+    ' Check if it's a valid line
+    If TypeName(selectedElement) = "HybridShapeLineExplicit" Or TypeName(selectedElement) = "Line" Then
+        Dim length As Double
+        length = selectedElement.GetLength()
+        MsgBox "The selected line length is: " & length & " mm", vbInformation, "Line Length"
+    Else
+        MsgBox "The selected element is not a valid 3D line!", vbExclamation, "Invalid Selection"
+    End If
+Else
+    MsgBox "No line selected.", vbExclamation, "Selection Error"
+End If
+
+' Clear selection
+selection.Clear()
+
+' Release objects
+Set selection = Nothing
+Set partDocument = Nothing
+Set CATIA = Nothing
+
+------------------------------------------Select a Line and Create a Point at a User-Defined Ratio-----------------------------
+Sub CATMain()
+    ' Get CATIA application
+    Dim CATIA As Object
+    Set CATIA = GetObject(, "CATIA.Application")
+
+    ' Get the active part document
+    Dim partDocument As Object
+    Set partDocument = CATIA.ActiveDocument
+
+    ' Get the part
+    Dim part As Object
+    Set part = partDocument.Part
+
+    ' Get the selection
+    Dim selection As Object
+    Set selection = partDocument.Selection
+
+    ' Prompt user to select a line
+    MsgBox "Please select a line.", vbInformation, "Selection Required"
+    Dim status As Integer
+    status = selection.SelectElement2(Array("Edge"), "Select a line", False)
+
+    ' Validate selection
+    If status <> 0 Then
+        MsgBox "No valid line selected.", vbExclamation, "Selection Error"
+        Exit Sub
+    End If
+
+    ' Get the selected line
+    Dim line As Object
+    Set line = selection.Item(1).Value
+
+    ' Prompt user for position ratio (0 to 1)
+    Dim inputRatio As String
+    inputRatio = InputBox("Enter the position ratio (0 to 1):", "User Input", "0.5")
+
+    ' Validate ratio
+    If Not IsNumeric(inputRatio) Or CDbl(inputRatio) < 0 Or CDbl(inputRatio) > 1 Then
+        MsgBox "Invalid input. Please enter a number between 0 and 1.", vbExclamation, "Error"
+        Exit Sub
+    End If
+    Dim ratio As Double
+    ratio = CDbl(inputRatio)
+
+    ' Get the HybridShapeFactory
+    Dim hsf As Object
+    Set hsf = part.HybridShapeFactory
+
+    ' Get the geometrical set or create one
+    Dim hybridBodies As Object
+    Set hybridBodies = part.HybridBodies
+    Dim geoSet As Object
+
+    If hybridBodies.Count = 0 Then
+        Set geoSet = hybridBodies.Add()
+        geoSet.Name = "Geometrical Set"
+    Else
+        Set geoSet = hybridBodies.Item(1)
+    End If
+
+    ' Create a point at the given ratio along the line
+    Dim pointOnLine As Object
+    Set pointOnLine = hsf.AddNewPointOnCurveWithReference(line, ratio, False)
+    geoSet.AppendHybridShape pointOnLine
+
+    ' Update the part
+    part.Update()
+
+    ' Display confirmation
+    MsgBox "A point has been created at " & ratio * 100 & "% of the line.", vbInformation, "Success"
+
+    ' Release objects
+    Set pointOnLine = Nothing
+    Set geoSet = Nothing
+    Set hsf = Nothing
+    Set line = Nothing
+    Set selection = Nothing
+    Set part = Nothing
+    Set partDocument = Nothing
+    Set CATIA = Nothing
+End Sub
+
+
+
+Sub CATMain()
+    ' Test coding create point in line with input pitch
+
+    ' Get start CATIA application
+    Dim CATIA as Object
+    Set CATIA = GetObject( , "CATIA.Application" )
+
+    ' Get the active part document
+    Dim partDocument as object
+    Set partDocument = CATIA.ActiveDocument
+
+    ' Get the part
+    Dim part as Object
+    Set part = partDocument.Part
+
+    ' Get the selection
+    Dim selection as Object
+    Set selection = partDocument.Selection
+
+    ' Get the selected line
+    Dim line As Object
+    Set line = selection.Item(1).Value
+
+    ' Output the length of the line
+    Dim length as double
+    length = line.GetLength()
+    ' Not sure this step!!!!!!!!!!!!!!!!!!!! Example of code  MsgBox "The selected edge length is: " & length & " mm", vbInformation, "Edge Length"
+    MsgBox "The length of the line is: ", length
+    MsgBox "The length of the line is: " & length
+
+    ' Next Step create points on the line
+    Dim pitchPoint as string
+    pitchPoint = InputBox( "Please enter the pitch length of each point: " )
+    ' Convert string into float
+    Dim floatPitch as Double
+    floatPitch = CDbl( pitchPoint )
+
+
+    ' Not sure what is this do HybridShapeFactory ( about Geometrical Set )!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    Dim hsf as Object
+    Set hsf = part.HybridShapeFactory
+
+    ' Get the geometrical set or create one 
+    Dim hybridBodies as Object
+    Set hybridBodies = part.HybridBodies
+
+    Dim geoSet as Object
+    If hybridBodies.Count = 0 Then
+        Set geoSet = hybridBodies.Add()
+        geoSet.Name = "Geometrical Set"
+    Else
+        Set geoSet = hybridBodies.Item( 1 )
+    End If
+
+    ' Test creat the first point with the length
+    Dim pointOnLine as Object
+    Set pointOnLine = hsf.AddNewPointOnCurveWithReference( line, distance, False )
+    ' Get the point step into the Geometrical set
+    geoSet.AppendHybridShape pointOnLine
+
+
+    ' Update the part
+    part.Update()
+
+
+End Sub
