@@ -22,22 +22,41 @@ class Solution:
         
     def isUgly( self, n ):
         storeDivine = []
+        newN = n
         
-        while( ( self.checkPrimeNumber( n ) == False ) and ( n != 1 ) ):
+        # Error this time was the n before input and n output was the same so the loop continue run
+        while( ( self.checkPrimeNumber( n ) == False ) and ( n != 1 ) and ( n != -1 ) ):
             for divineNum in self.primeUglyNum:
                 if ( n % divineNum == 0 ):
                     n /= divineNum
                     n = int( n )
+                    print( "n on process: ", n )
                     storeDivine.append( divineNum )
+                    newN = n
+            # if( newN == n ):
+            #     break
                     
-        if( ( n not in self.primeUglyNum ) and ( n != 1 ) ):
-            return False
+        print( "Final n: ", n )
+        
+        if( ( self.checkPrimeNumber( n ) == True ) and ( n not in self.primeUglyNum ) ):
+            self.answer = False
+        elif( n == -1 ):
+            self.answer = False
         elif( n == 1 ):
-            return True
+            self.answer = True
+        
+        if( n in storeDivine[ 0:len( storeDivine ) ]  ):
+            self.answer = True
+        
+        print( self.answer )
+        return self.answer
         
         
 checkAns = Solution()
-checkAns.isUgly( 6 )
-checkAns.isUgly( 1 )
-checkAns.isUgly( 14 )
-checkAns.isUgly( 8 )                       # Answer: true
+# checkAns.isUgly( 6 )                                    # Answer: True
+# checkAns.isUgly( 1 )                                    # Answer: True
+# checkAns.isUgly( 14 )                                   # Answer: False
+# checkAns.isUgly( 8 )                                    # Answer: True
+# checkAns.isUgly( -2147483648 )                          # Answer: False
+checkAns.isUgly( -51799 )                               # Answer: 
+
