@@ -22,41 +22,57 @@ class Solution:
         
     def isUgly( self, n ):
         storeDivine = []
-        newN = n
+        newN = [ 0,0,  ]
         
-        # Error this time was the n before input and n output was the same so the loop continue run
-        while( ( self.checkPrimeNumber( n ) == False ) and ( n != 1 ) and ( n != -1 ) ):
+        if ( n <= 0 ):
+            return False
+            
+        if ( n == 1 ):
+            return True
+        
+        while( ( self.checkPrimeNumber( n ) == False ) and ( newN[ len( newN ) - 2 ] != n ) ):
             for divineNum in self.primeUglyNum:
                 if ( n % divineNum == 0 ):
                     n /= divineNum
                     n = int( n )
-                    print( "n on process: ", n )
                     storeDivine.append( divineNum )
-                    newN = n
-            # if( newN == n ):
-            #     break
+            # Update n to new value
+            newN.append( n )
+        
+        print( "store storeDivine: ", storeDivine )
+        print( "n before check condition: ", n )
+            
+        # check condition ugly number
+        if( n >= 1 ):
+            if( n in self.primeUglyNum ):
+                return True
+            elif( n == 1 ):
+                self.answer = True
+            else:
+                return False
+                
+                
                     
-        print( "Final n: ", n )
-        
-        if( ( self.checkPrimeNumber( n ) == True ) and ( n not in self.primeUglyNum ) ):
-            self.answer = False
-        elif( n == -1 ):
-            self.answer = False
-        elif( n == 1 ):
-            self.answer = True
-        
-        if( n in storeDivine[ 0:len( storeDivine ) ]  ):
-            self.answer = True
-        
-        print( self.answer )
         return self.answer
         
         
 checkAns = Solution()
-# checkAns.isUgly( 6 )                                    # Answer: True
-# checkAns.isUgly( 1 )                                    # Answer: True
-# checkAns.isUgly( 14 )                                   # Answer: False
-# checkAns.isUgly( 8 )                                    # Answer: True
-# checkAns.isUgly( -2147483648 )                          # Answer: False
-checkAns.isUgly( -51799 )                               # Answer: 
+# print( checkAns.isUgly( 6 )  )
+# print( checkAns.isUgly( 1 )  )
+# print( checkAns.isUgly( 14 ) )
+# print( checkAns.isUgly( 8 )  )
+# print( checkAns.isUgly( -2147483648 ) )
+# print( checkAns.isUgly( 65536 ) )
+# print( checkAns.isUgly( -51799 )  )
+# print( checkAns.isUgly( 98 )   )
+print( checkAns.isUgly( n = 1332185066 )   )                # Runtime Error but complete
 
+# checkAns.isUgly( 6 )                                      # Answer: True
+# checkAns.isUgly( 1 )                                      # Answer: True
+# checkAns.isUgly( 14 )                                     # Answer: False
+# checkAns.isUgly( 8 )                                      # Answer: True
+# checkAns.isUgly( -2147483648 )                            # Answer: False
+# checkAns.isUgly( 65536 )                                  # Answer: True
+# checkAns.isUgly( -51799 )                                 # Answer: False 
+# checkAns.isUgly( 98 )                                     # Answer: False
+# checkAns.isUgly( n = 1332185066 )                           # Answer: False
