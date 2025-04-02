@@ -35,3 +35,4 @@ checkAns = Solution()
 checkAns.hammingWeight( 11 )
 checkAns.hammingWeight( 128 )
 checkAns.hammingWeight( 2147483645 )
+# comment
