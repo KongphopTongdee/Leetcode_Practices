@@ -50,6 +50,73 @@ class Solution:
         # print( "Final count border line:", countBorderLine )
                 
         return countBorderLine
+
+    def answerDepthFirstSearchAlgorithms( self, grid ):
+        '''Get the perimater that conver the island area
+        
+        Parameters
+        ----------
+        gird : ndarray of shape ( nDim, nDim )
+            Area of water and area of land
+        
+        Return
+        -------
+        nPerimeter: int
+            The number of perimeter cover island.
+        '''  
+        # declare the coordinate XY
+        visit = set()
+
+        # declare the depth-first search function
+        def dfs( i, j ):
+            '''Search the perimeter which is from out of boundary, and land area.
+            
+            Parameters
+            ----------
+            i: int
+                The coordinate of X axis
+
+            j: int
+                The coordinate of Y axis
+                
+            Return
+            -------
+             : int
+                1( If it is boundary and land area near water)
+                0( If it is land area around itself ) 
+            '''  
+            # Check, if it is a boundary or the water area.
+            if i >= len( grid ) or j >= len( grid[ 0 ] ) or \
+                i < 0 or j < 0 or grid[ i ][ j ] == 0:
+                return 1
+            # Check, if it is already search in that coordinate before.
+            if( i, j ) in visit:
+                return 0 
+            
+            # To avoid the recursive multiple time when entering this function agian.
+            visit.add( ( i, j ) )
+            
+            # Using recursively function
+            # Right direction
+            perim = dfs( i, j + 1 )
+            # Left direction
+            perim += dfs( i, j - 1 )
+            # Top direction
+            perim += dfs( i + 1, j )
+            # Bottom direction
+            perim += dfs( i - 1, j )
+            
+            return perim
+        
+        # Search for the island coordinate 
+        for i in range( len( grid ) ):
+            for j in range( len( grid[ 0 ] ) ):
+                # Check if it is land and then call the function 
+                if grid[ i ][ j ] == 1:
+                    return dfs( i, j )
+    
+    def bestFirstSearch( self, ):
+        pass
     
     def islandPerimeter( self, grid ):
         areaIsland, allIsland, finalIsland = self.positionAllIsland( grid )
