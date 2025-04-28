@@ -115,9 +115,6 @@ class Solution:
                 if grid[ i ][ j ] == 1:
                     return dfs( i, j )
     
-    def bestFirstSearch( self, ):
-        pass
-    
     def islandPerimeter( self, grid ):
         areaIsland, allIsland, finalIsland = self.positionAllIsland( grid )
         # print( "Area of island -->", areaIsland )
