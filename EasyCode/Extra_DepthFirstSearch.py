@@ -16,7 +16,7 @@
 
 class Solution():
     def __init__( self ):
-        self.answer = ()
+        self.answer = False
         
         
     def depthFirstSearch( self, allMaze, startPos, endPos ):
@@ -49,10 +49,25 @@ class Solution():
             if( x, y ) in visit:
                 return 1 
             
-            visit.add( x, y )
+            visit.add( ( x, y ) )
             
+            if( ( x, y ) != endPos ):
+                # Check Top
+                dfs( x, y + 1 )
+                # Check Bottom
+                dfs( x, y - 1 )
+                # Check Left
+                dfs( x - 1, y )
+                # Check Right
+                dfs( x + 1, y )
+            elif( ( x, y ) == endPos ):
+                return True
                 
-            
+        for i in range( len( allMaze ) ):
+            for j in range( len( allMaze[ 0 ] ) ):
+                if( allMaze[ i ][ j ] == 0 ):
+                    return dfs( i, j )
+                
     
     def main( self, maze, start, end ):
         '''The main function for call the depth-first search funtion.
@@ -75,6 +90,7 @@ class Solution():
         '''
         
         self.answer = self.depthFirstSearch( maze, start, end )
+        print( self.answer )
         
         return self.answer
         
