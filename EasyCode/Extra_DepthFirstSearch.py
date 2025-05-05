@@ -17,8 +17,7 @@
 class Solution():
     def __init__( self ):
         self.answer = False
-        
-        
+          
     def depthFirstSearch( self, allMaze, startPos, endPos ):
         '''The function that use depth-first search algorithms to find the path.
         
@@ -26,9 +25,9 @@ class Solution():
         ----------
         allMaze : ndarray with shape ( mazeHeight, mazeWidth )
             The maze size 
-        startPos : ndarray with coordinate shape ( x, y )
+        startPos : ndarray with coordinate shape ( row, y )
             The start point
-        endPos : ndarray with coordinate shape ( x, y )
+        endPos : ndarray with coordinate shape ( row, y )
             The end point
         
         Return
@@ -42,28 +41,28 @@ class Solution():
         visit = set()
         
         # Declare the funtion for check around element.
-        def dfs( x, y ):
+        def dfs( row, column ):
             # Check, if there are boundary or wall.
-            if( ( x < 0 ) or ( y < 0 ) or ( x >= len( allMaze ) ) or ( y >= len( allMaze[ len( allMaze ) - 1 ] )  ) or ( allMaze[ x ][ y ] == 1 ) ):               #  Use >= because we want the last ( x, y ) position but len didn't give last index.
+            if( ( row < 0 ) or ( column < 0 ) or ( row >= len( allMaze ) ) or ( column >= len( allMaze[ 0 ] ) ) or ( allMaze[ row ][ column ] == 1 ) ):               #  Use >= because we want the last ( row, column ) position but len didn't give last index.
                 return False
             # Check, if there are already visit.
-            if( ( x, y ) in visit ):
-                return False 
+            if( ( row, column ) in visit ):
+                return False
             # Check, if there is the end position.
-            if( ( x, y ) == endPos ):
+            if( ( row, column ) == endPos ):
                 return True
                 
             # If there aren't come to this, grid add it.
-            visit.add( ( x, y ) )
+            visit.add( ( row, column ) )
             
-            # Check Top
-            dfs( x, y + 1 )
-            # Check Bottom
-            dfs( x, y - 1 )
-            # Check Left
-            dfs( x - 1, y )
             # Check Right
-            dfs( x + 1, y )
+            dfs( row, column + 1 )
+            # Check Left
+            dfs( row, column - 1 )
+            # Check Bottom
+            dfs( row - 1, column )
+            # Check Top
+            dfs( row + 1, column )
                 
         startPosX, startPosY = startPos
         dfs( startPosX, startPosY )
@@ -91,6 +90,10 @@ class Solution():
         
         self.answer = self.depthFirstSearch( maze, start, end )
         print( self.answer )
+        
+        # for row in range(len(maze)):
+        #     for col in range(len(maze[0])):
+        #         print(f"Value at ({row}, {col}) = {maze[row][col]}")
         
         return self.answer
         
