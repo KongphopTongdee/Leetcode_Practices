@@ -43,30 +43,30 @@ class Solution():
         
         # Declare the funtion for check around element.
         def dfs( x, y ):
-            # Check, if there are boundary or wall
-            if( ( x < 0 ) or ( y < 0 ) or ( x >= len( allMaze ) ) or ( y >= len( allMaze[ len( allMaze ) - 1 ] )  ) or ( ( x, y ) == 1 ) ):               #  Use >= because we want the last ( x, y ) position but len didn't give last index.
-                return 0
-            if( x, y ) in visit:
-                return 1 
-            
-            visit.add( ( x, y ) )
-            
-            if( ( x, y ) != endPos ):
-                # Check Top
-                dfs( x, y + 1 )
-                # Check Bottom
-                dfs( x, y - 1 )
-                # Check Left
-                dfs( x - 1, y )
-                # Check Right
-                dfs( x + 1, y )
-            elif( ( x, y ) == endPos ):
+            # Check, if there are boundary or wall.
+            if( ( x < 0 ) or ( y < 0 ) or ( x >= len( allMaze ) ) or ( y >= len( allMaze[ len( allMaze ) - 1 ] )  ) or ( allMaze[ x ][ y ] == 1 ) ):               #  Use >= because we want the last ( x, y ) position but len didn't give last index.
+                return False
+            # Check, if there are already visit.
+            if( ( x, y ) in visit ):
+                return False 
+            # Check, if there is the end position.
+            if( ( x, y ) == endPos ):
                 return True
                 
-        for i in range( len( allMaze ) ):
-            for j in range( len( allMaze[ 0 ] ) ):
-                if( allMaze[ i ][ j ] == 0 ):
-                    return dfs( i, j )
+            # If there aren't come to this, grid add it.
+            visit.add( ( x, y ) )
+            
+            # Check Top
+            dfs( x, y + 1 )
+            # Check Bottom
+            dfs( x, y - 1 )
+            # Check Left
+            dfs( x - 1, y )
+            # Check Right
+            dfs( x + 1, y )
+                
+        startPosX, startPosY = startPos
+        dfs( startPosX, startPosY )
                 
     
     def main( self, maze, start, end ):
