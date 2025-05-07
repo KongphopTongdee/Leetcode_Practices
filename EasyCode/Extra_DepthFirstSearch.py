@@ -56,17 +56,23 @@ class Solution():
             visit.add( ( row, column ) )
             
             # Check Right
-            dfs( row, column + 1 )
+            if( dfs( row, column + 1 ) == True ):
+                return True
             # Check Left
-            dfs( row, column - 1 )
+            if( dfs( row, column - 1 ) == True ):
+                return True
             # Check Bottom
-            dfs( row - 1, column )
+            if( dfs( row - 1, column ) == True ):
+                return True
             # Check Top
-            dfs( row + 1, column )
+            if( dfs( row + 1, column ) == True ):
+                return True
                 
         startPosX, startPosY = startPos
-        dfs( startPosX, startPosY )
-                
+        if( dfs( startPosX, startPosY ) == True ) :
+            return True
+        
+        return False
     
     def main( self, maze, start, end ):
         '''The main function for call the depth-first search funtion.
@@ -90,10 +96,6 @@ class Solution():
         
         self.answer = self.depthFirstSearch( maze, start, end )
         print( self.answer )
-        
-        # for row in range(len(maze)):
-        #     for col in range(len(maze[0])):
-        #         print(f"Value at ({row}, {col}) = {maze[row][col]}")
         
         return self.answer
         
