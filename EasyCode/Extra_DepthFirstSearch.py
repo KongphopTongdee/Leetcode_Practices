@@ -107,3 +107,9 @@ checkAns.main( maze = [
     [1, 1, 0, 1],
     [0, 0, 0, 0]
 ], start = (0, 0), end = ( 3, 3 ) )
+
+
+# 2. Flood Fill (Like Paint Bucket Tool)
+# 🧩 Problem: Implement the "flood fill" algorithm. Given a 2D image (grid of colors) and a start point, fill the connected region of the same color with a new color.
+
+# ✅ Concepts practiced: handling boundaries, avoiding re-visiting cells
