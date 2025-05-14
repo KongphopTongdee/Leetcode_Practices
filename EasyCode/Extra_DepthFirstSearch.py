@@ -100,16 +100,47 @@ class Solution():
         return self.answer
         
     
-checkAns = Solution()
-checkAns.main( maze = [
-    [0, 1, 0, 0],
-    [0, 0, 0, 1],
-    [1, 1, 0, 1],
-    [0, 0, 0, 0]
-], start = (0, 0), end = ( 3, 3 ) )
+# checkAns = Solution()
+# checkAns.main( maze = [
+#     [0, 1, 0, 0],
+#     [0, 0, 0, 1],
+#     [1, 1, 0, 1],
+#     [0, 0, 0, 0]
+# ], start = (0, 0), end = ( 3, 3 ) )
 
 
 # 2. Flood Fill (Like Paint Bucket Tool)
 # 🧩 Problem: Implement the "flood fill" algorithm. Given a 2D image (grid of colors) and a start point, fill the connected region of the same color with a new color.
 
 # ✅ Concepts practiced: handling boundaries, avoiding re-visiting cells
+
+import numpy as np
+class Solution():
+    def __init__( self ):
+        self.answer = []
+        
+    def dfsChangePointInArray( self, ):
+        print( "Hello" )
+
+    def main( self ):
+        '''The main funciton receive the array, start postion, and number to change.
+        
+        Parameters
+        ----------
+        array2D : ndarray with shape ( arrayHeight, arrayWidth )
+            The input array which have the random number.
+        startPos : ndarray with shape ( nSample, 2 )
+            The first point to start depth-first search.
+        numChange : int
+            The number which want to replace when depth-first search is running.
+        
+        Return
+        ------
+        array2D : ndarray with shape ( arrayHeight, arrayWidth )
+            The new array2D that already change number inslide the array.
+        '''
+    
+        return self.answer
+        
+checkAns = Solution()
+checkAns.main()
