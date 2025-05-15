@@ -118,42 +118,56 @@ class Solution():
     def __init__( self ):
         self.answer = []
         
-    def dfsChangePointInArray( self, array2D, startPos, numChange ):
-        print( "Input array2D ->", array2D )
+    def floodFill(self, image, startPos, newColor):
+        '''The function for fill the new color on the image.
         
-        startPosRow, startPosColumn = startPos
-        currentValue = array2D[ startPosRow ][ startPosColumn ]
-        visitPos = set()
+        Parameters
+        ----------
+        image : ndarray with shape ( imageHeight, imageWidth )
+            The input image which has only one color dimension.
+        startPos : ndarray with shape ( nSample, 2 )
+            The select position for start depth-first search in the form of coordinate.
+        newColor:
+            The new color to change.
         
-        def dfsearch( posRow, posColumn ):
-            if ( posRow < 0 ) or ( posColumn < 0 ) or ( posRow >= len( array2D ) ) or       \
-            ( posColumn >= len( array2D[ 0 ] ) or ( array2D[ posRow ][ posColumn ] != currentValue ) ):
-                return False
+        Return
+        ------
+        image : ndarray with shape ( imageHeight, imageWidth )
+            The output image after change color which has only one color dimension.
+        '''
+        # Seperate the tuple into one variable.
+        sr, sc = startPos
+        # Get the limit of image. 
+        rows, cols = len(image), len( image[0] )
+        # Get the original color of image before change.
+        originalColor = image[sr][sc]
+
+        # Check, no need to fill if color is same.
+        if originalColor == newColor:
+            return image  
+    
+        # Define funciton depth-first search.
+        def dfs(r, c):
+            # Check boundaries.
+            if r < 0 or r >= rows or c < 0 or c >= cols:
+                return
+            # If the color already change ignore them.
+            if image[r][c] != originalColor:
+                return
             
-            if( ( posRow, posColumn ) in visitPos ):
-                return False
-                
-            visitPos.add( ( posRow, posColumn ) )
-            
-            # Search left
-            dfsearch( posRow, posColumn - 1 )
-            # Search right
-            dfsearch( posRow, posColumn + 1 )
-            # Search top
-            dfsearch( posRow + 1, posColumn )
-            # Search bottom
-            dfsearch( posRow - 1, posColumn )
+            # Fill the color
+            image[r][c] = newColor  
+    
+            # Explore 4 directions
+            dfs(r+1, c)
+            dfs(r-1, c)
+            dfs(r, c+1)
+            dfs(r, c-1)
+    
+        # Call the function 
+        dfs(sr, sc)
         
-        dfsearch( startPosRow, startPosColumn )
-        
-        for position in visitPos:
-            rowPosition, columnPosition = position
-            array2D[ rowPosition ][ columnPosition ] = numChange
-        
-        print( "visitPos ->", visitPos ) 
-        print( "Output array2D ->", array2D )
-        
-        return array2D
+        return image
         
 
     def main( self, array2D, startPos, numChange ):
@@ -174,7 +188,8 @@ class Solution():
             The new array2D that already change number inslide the array.
         '''
         
-        self.answer = self.dfsChangePointInArray( array2D, startPos, numChange )
+        # self.answer = self.dfsChangePointInArray( array2D, startPos, numChange )
+        self.answer = self.floodFill( array2D, startPos, numChange )
     
         return self.answer
         
