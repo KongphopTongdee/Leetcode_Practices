@@ -114,15 +114,49 @@ class Solution():
 
 # ✅ Concepts practiced: handling boundaries, avoiding re-visiting cells
 
-import numpy as np
 class Solution():
     def __init__( self ):
         self.answer = []
         
-    def dfsChangePointInArray( self, ):
-        print( "Hello" )
+    def dfsChangePointInArray( self, array2D, startPos, numChange ):
+        print( "Input array2D ->", array2D )
+        
+        startPosRow, startPosColumn = startPos
+        currentValue = array2D[ startPosRow ][ startPosColumn ]
+        visitPos = set()
+        
+        def dfsearch( posRow, posColumn ):
+            if ( posRow < 0 ) or ( posColumn < 0 ) or ( posRow >= len( array2D ) ) or       \
+            ( posColumn >= len( array2D[ 0 ] ) or ( array2D[ posRow ][ posColumn ] != currentValue ) ):
+                return False
+            
+            if( ( posRow, posColumn ) in visitPos ):
+                return False
+                
+            visitPos.add( ( posRow, posColumn ) )
+            
+            # Search left
+            dfsearch( posRow, posColumn - 1 )
+            # Search right
+            dfsearch( posRow, posColumn + 1 )
+            # Search top
+            dfsearch( posRow + 1, posColumn )
+            # Search bottom
+            dfsearch( posRow - 1, posColumn )
+        
+        dfsearch( startPosRow, startPosColumn )
+        
+        for position in visitPos:
+            rowPosition, columnPosition = position
+            array2D[ rowPosition ][ columnPosition ] = numChange
+        
+        print( "visitPos ->", visitPos ) 
+        print( "Output array2D ->", array2D )
+        
+        return array2D
+        
 
-    def main( self ):
+    def main( self, array2D, startPos, numChange ):
         '''The main funciton receive the array, start postion, and number to change.
         
         Parameters
@@ -139,8 +173,27 @@ class Solution():
         array2D : ndarray with shape ( arrayHeight, arrayWidth )
             The new array2D that already change number inslide the array.
         '''
+        
+        self.answer = self.dfsChangePointInArray( array2D, startPos, numChange )
     
         return self.answer
         
 checkAns = Solution()
-checkAns.main()
+checkAns.main( ( 
+[ 4, 7, 0, 4, 10 ], 
+[ 5, 2, 0, 8, 2 ], 
+[ 5, 8, 0, 7, 7 ], 
+[ 10, 4, 0, 5, 2 ], 
+[ 8, 7, 0, 9, 1 ] ), ( 2, 2 ), 66 )
+checkAns.main( ( 
+[ 2, 1, 3, 8, 4 ], 
+[ 7, 4, 7, 2, 2 ], 
+[ 0, 0, 0, 0, 0 ], 
+[ 2, 1, 7, 9, 8 ], 
+[ 6, 5, 9, 5 ,7 ] ), ( 2, 4 ), 66 )
+checkAns.main( ( 
+[ 6, 0, 4, 5, 8 ], 
+[ 6, 0, 0, 6, 1 ], 
+[ 3, 6, 0, 0, 9 ], 
+[ 8, 2, 3, 0, 4 ], 
+[ 7, 8, 4, 0, 2 ]  ), ( 2, 3 ), 66 )
