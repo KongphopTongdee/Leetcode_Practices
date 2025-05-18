@@ -193,22 +193,69 @@ class Solution():
     
         return self.answer
         
-checkAns = Solution()
-checkAns.main( ( 
-[ 4, 7, 0, 4, 10 ], 
-[ 5, 2, 0, 8, 2 ], 
-[ 5, 8, 0, 7, 7 ], 
-[ 10, 4, 0, 5, 2 ], 
-[ 8, 7, 0, 9, 1 ] ), ( 2, 2 ), 66 )
-checkAns.main( ( 
-[ 2, 1, 3, 8, 4 ], 
-[ 7, 4, 7, 2, 2 ], 
-[ 0, 0, 0, 0, 0 ], 
-[ 2, 1, 7, 9, 8 ], 
-[ 6, 5, 9, 5 ,7 ] ), ( 2, 4 ), 66 )
-checkAns.main( ( 
-[ 6, 0, 4, 5, 8 ], 
-[ 6, 0, 0, 6, 1 ], 
-[ 3, 6, 0, 0, 9 ], 
-[ 8, 2, 3, 0, 4 ], 
-[ 7, 8, 4, 0, 2 ]  ), ( 2, 3 ), 66 )
+# checkAns = Solution()
+# checkAns.main( ( 
+# [ 4, 7, 0, 4, 10 ], 
+# [ 5, 2, 0, 8, 2 ], 
+# [ 5, 8, 0, 7, 7 ], 
+# [ 10, 4, 0, 5, 2 ], 
+# [ 8, 7, 0, 9, 1 ] ), ( 2, 2 ), 66 )
+# checkAns.main( ( 
+# [ 2, 1, 3, 8, 4 ], 
+# [ 7, 4, 7, 2, 2 ], 
+# [ 0, 0, 0, 0, 0 ], 
+# [ 2, 1, 7, 9, 8 ], 
+# [ 6, 5, 9, 5 ,7 ] ), ( 2, 4 ), 66 )
+# checkAns.main( ( 
+# [ 6, 0, 4, 5, 8 ], 
+# [ 6, 0, 0, 6, 1 ], 
+# [ 3, 6, 0, 0, 9 ], 
+# [ 8, 2, 3, 0, 4 ], 
+# [ 7, 8, 4, 0, 2 ]  ), ( 2, 3 ), 66 )
+
+# 3. Path Sum in a Binary Tree
+# 🧩 Problem: Given a binary tree and a sum, return True if there's a path from root to leaf where the sum of node values equals the given value.
+# ✅ Concepts practiced: DFS on trees, backtracking
+
+class TreeNode:
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        
+class Sollution():
+    def __init__( self ):
+        self.answer = False
+        
+    def subsetsWithDup( self, nums ):
+        result = []
+        
+        def backTrack( start, current ):
+            # Add current subset to the final result
+            result.append( list( current ) )
+            # Iterate over nums to generate all possible subsets
+            for i in range( start, len( nums ) ):
+                # 1. Skip duplicates
+                if( ( i > start ) and nums[ i ] == nums[ i - 1 ] ):
+                    continue
+                # 2. Include nums[i] in current subset and move forward 
+                current.append( nums[ i ] )
+                backTrack( i + 1, current )
+                # 3. Exclude nums[i] from current subset (backtrack)
+                current.pop()
+                
+        # Sort the numbers to handle duplicates
+        nums.sort()
+        # Initiate backtracking
+        backTrack( 0, [] )
+        return result
+        
+    
+    def main( self, objTreeNode, sumValue ):
+        inputNums = [ 1, 2, 2 ]
+        finalResult = self.subsetsWithDup( inputNums )
+        
+        return self.answer 
+    
+checkAns = Sollution()
+checkAns.main( 2, 22 )
