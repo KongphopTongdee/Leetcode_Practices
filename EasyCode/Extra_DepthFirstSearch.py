@@ -223,6 +223,21 @@ class TreeNode:
         self.left = left
         self.right = right
         
+# Build the TreeNode
+# First Iteration
+root = TreeNode( 5 )
+root.left = TreeNode( 4 )
+root.right = TreeNode( 8 )
+
+# Second Iteration
+root.left.left = TreeNode( 11 )
+root.right.left = TreeNode( 13 )
+root.right.right = TreeNode( 4 )
+
+# Third Iteration
+root.left.left.left = TreeNode( 7 )
+root.left.left.right = TreeNode( 2 )
+
 class Sollution():
     def __init__( self ):
         self.answer = False
@@ -258,4 +273,4 @@ class Sollution():
         return self.answer 
     
 checkAns = Sollution()
-checkAns.main( 2, 22 )
+checkAns.main( root, 22 )
