@@ -274,3 +274,42 @@ class Sollution():
     
 checkAns = Sollution()
 checkAns.main( root, 22 )
+
+
+
+# Don't Use
+class Solution():
+    def __init__( self ):
+        self.answer = []
+    
+    def backTracking( self, arrayValue ):
+        result = []
+        
+        def bT( start, current ):
+            # Add every currnt array in result
+            result.append( list( current ) )
+            # Loop for amount of array input
+            for idx in range( start, len( arrayValue ) ):
+                # 1. Skip duplicates when idx is more than startIDX and value was the same as previous value.
+                if( ( idx > start ) and ( arrayValue[ idx ] == arrayValue[ idx - 1 ] ) ):
+                    continue
+                # 2. Add value in current array and move forward.
+                current.append( arrayValue[ idx ] )
+                # ?? I want meaning.
+                bT( idx + 1, current )
+                # 3. Add the current array in the result when call backtrack function again. And search the back the previous value (backtrack)
+                current.pop()
+        # Sort the number to handle the duplicates
+        arrayValue.sort()
+        # Start first backTracking
+        bT( 0, [] )
+        
+        return result
+    
+    def main( self, arrayValue ):
+        self.answer  = self.backTracking( arrayValue )
+        print( self.answer )
+        return self.answer
+        
+checkAns = Solution()
+checkAns.main( [ 1, 2, 3, 4, 5 ] )
