@@ -272,9 +272,8 @@ class Sollution():
         
         return self.answer 
     
-checkAns = Sollution()
-checkAns.main( root, 22 )
-
+# checkAns = Sollution()
+# checkAns.main( root, 22 )
 
 
 # Don't Use
@@ -295,7 +294,7 @@ class Solution():
                     continue
                 # 2. Add value in current array and move forward.
                 current.append( arrayValue[ idx ] )
-                # ?? I want meaning.
+                # Backtrack to the value that didn't similar to previous value.
                 bT( idx + 1, current )
                 # 3. Add the current array in the result when call backtrack function again. And search the back the previous value (backtrack)
                 current.pop()
@@ -312,4 +311,4 @@ class Solution():
         return self.answer
         
 checkAns = Solution()
-checkAns.main( [ 1, 2, 3, 4, 5 ] )
+checkAns.main( [ 1, 2, 3, 4 ] )
