@@ -108,6 +108,7 @@ class Solution():
 #     [0, 0, 0, 0]
 # ], start = (0, 0), end = ( 3, 3 ) )
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # 2. Flood Fill (Like Paint Bucket Tool)
 # 🧩 Problem: Implement the "flood fill" algorithm. Given a 2D image (grid of colors) and a start point, fill the connected region of the same color with a new color.
@@ -213,9 +214,18 @@ class Solution():
 # [ 8, 2, 3, 0, 4 ], 
 # [ 7, 8, 4, 0, 2 ]  ), ( 2, 3 ), 66 )
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 # 3. Path Sum in a Binary Tree
 # 🧩 Problem: Given a binary tree and a sum, return True if there's a path from root to leaf where the sum of node values equals the given value.
 # ✅ Concepts practiced: DFS on trees, backtracking
+
+# Step by step solve this question.
+# 1. Convert treeNode into array
+# 2. Create combination from array
+# 3. Find all sum combination in array
+# 4. Check summaiton with input value
+
 
 class TreeNode:
     def __init__(self, val, left=None, right=None):
@@ -225,56 +235,67 @@ class TreeNode:
         
 # Build the TreeNode
 # First Iteration
-root = TreeNode( 5 )
-root.left = TreeNode( 4 )
-root.right = TreeNode( 8 )
+firstIter = TreeNode( 5 )
 
 # Second Iteration
-root.left.left = TreeNode( 11 )
-root.right.left = TreeNode( 13 )
-root.right.right = TreeNode( 4 )
+secondIter_1 = TreeNode( 4 )
+secondIter_2 = TreeNode( 8 )
 
 # Third Iteration
-root.left.left.left = TreeNode( 7 )
-root.left.left.right = TreeNode( 2 )
+thirdIter_1 = TreeNode( 11 )
+thirdIter_2 = TreeNode( 13 )
+thirdIter_3 = TreeNode( 4 )
+
+# Fourth Iteration
+fourthIter_1 = TreeNode( 7 )
+fourthIter_2 = TreeNode( 2 )
+
+# Link the TreeNode into link-list form.
+firstIter.left = secondIter_1
+firstIter.right = secondIter_2
+
+secondIter_1.left = thirdIter_1
+secondIter_2.left = thirdIter_2
+secondIter_2.right = thirdIter_3
+
+thirdIter_1.left = fourthIter_1
+thirdIter_1.right = fourthIter_2
 
 class Sollution():
     def __init__( self ):
-        self.answer = False
+        self.answer = None
+    
+    def convertTreeNodeToArr( self, objTreeNode ):
+        pass
+    
+    def createCombination( self, arrTreeNode ):
         
-    def subsetsWithDup( self, nums ):
-        result = []
+        def backTracking():
+            pass
+    
+    def findSumationArr( self, arrCombination, sumValue ):
+        answer = None
         
-        def backTrack( start, current ):
-            # Add current subset to the final result
-            result.append( list( current ) )
-            # Iterate over nums to generate all possible subsets
-            for i in range( start, len( nums ) ):
-                # 1. Skip duplicates
-                if( ( i > start ) and nums[ i ] == nums[ i - 1 ] ):
-                    continue
-                # 2. Include nums[i] in current subset and move forward 
-                current.append( nums[ i ] )
-                backTrack( i + 1, current )
-                # 3. Exclude nums[i] from current subset (backtrack)
-                current.pop()
-                
-        # Sort the numbers to handle duplicates
-        nums.sort()
-        # Initiate backtracking
-        backTrack( 0, [] )
-        return result
+        for idx in range( len( arrCombination ) ):
+            if( sum( arrCombination[ idx ] ) == sumValue ):
+                answer = True
+                return answer, arrCombination[ idx ]
+            else:
+                answer = False
         
+        return answer, []
     
     def main( self, objTreeNode, sumValue ):
-        inputNums = [ 1, 2, 2 ]
-        finalResult = self.subsetsWithDup( inputNums )
+        arrTreeNode = self.convertTreeNodeToArr( objTreeNode )
+        # arrCombination = self.createCombination( arrTreeNode )
+        # ansBoolean, arrSumation = self.findSumationArr( arrCombination, sumValue )
         
         return self.answer 
     
-# checkAns = Sollution()
-# checkAns.main( root, 22 )
+checkAns = Sollution()
+checkAns.main( firstIter, 22 )
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Don't Use
 class Solution():
