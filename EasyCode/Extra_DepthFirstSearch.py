@@ -266,7 +266,11 @@ class Sollution():
         self.answer = None
     
     def convertTreeNodeToArr( self, objTreeNode ):
-        pass
+        answerArr = []
+        current = objTreeNode
+        
+        current.left
+            
     
     def createCombination( self, arrTreeNode ):
         
