@@ -16,31 +16,24 @@ class Solution:
             child node right: x.right
         """
         def outputTemplate( treeNodeDisplay ):
-            displayOutput = f" Head node: { current.val } \n child node left: { current.left.val } \n child node right: { current.right.val }  \n"
+            displayOutput = f" Head node: { treeNodeDisplay.val } \n child node left: { treeNodeDisplay.left.val } \n child node right: { treeNodeDisplay.right.val }  \n"
             print( displayOutput )
-        
+            
+        def findAllLeftTreeNode( inputTreeNode ):
+            while( ( inputTreeNode.left != None ) and ( inputTreeNode.val != 0 ) ):
+                outputTemplate( inputTreeNode )
+                if( inputTreeNode.right != None ):
+                    storeTreeNode.update( { "rigth" : inputTreeNode.right } )
+                inputTreeNode = inputTreeNode.left
+            
+            
         current = treeNodeInsert
-        outputTemplate( current )
-        
         storeTreeNode = {  }
+        findAllLeftTreeNode( current )
         
-        # Not sure create with function when do it again
-        while( ( current.left != None ) or ( current.right != None )  ):
-            if( ( current.left == None ) and ( current.right != None ) ):
-                outputTemplate( current.right )
-                current = current.right
-            elif( ( current.left != None ) and ( current.right == None ) ):
-                outputTemplate( current.left )
-                current = current.left
-            elif( ( current.left != None ) and ( current.right != None ) ):
-                outputTemplate( current.left )
-                storeTreeNode.update( { "right": current.right } )
-                current = current.left
-            
-        # Another loop function for search next branch
-            
-        
-        
+        while( storeTreeNode != {} ):
+            popDict = storeTreeNode.popitem()
+            findAllLeftTreeNode( popDict[ len( popDict ) - 1 ] )
     
     def invertTree( self, root ):
         self.display( root )
