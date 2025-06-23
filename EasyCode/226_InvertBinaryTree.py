@@ -1,4 +1,4 @@
-# Definition for a binary tree node.
+# Definition for a binary tree node. This is the code that doesn't finish because we can't search n iteration.
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -43,8 +43,29 @@ class Solution:
             popDict = storeTreeNode.popitem()
             findAllLeftTreeNode( popDict[ len( popDict ) - 1 ] )
     
+    def invertFuncitonTreeNode( self, root ):
+        pass
+                
+    def answerThisQuestion( self, root ):
+        if not root:
+            return
+        
+        temp = root.left
+        print( temp.val )
+        root.left = root.right
+        root.right = temp
+
+        self.invertTree(root.left)
+        self.invertTree(root.right)
+
+        return root
+            
     def invertTree( self, root ):
-        self.display( root )
+        # self.display( root )
+        # self.invertFuncitonTreeNode( root )
+        newRoot = self.answerThisQuestion( root )
+        self.display( newRoot )
+        
 
 # FirstQuestion
 TreeNodeFirstQuestion = TreeNode( 4 )  
@@ -73,3 +94,20 @@ checkAns = Solution()
 checkAns.invertTree( TreeNodeFirstQuestion )            # Ans: [4,7,2,9,6,3,1]
 # checkAns.invertTree( TreeNodeSecondQuestion )           # Ans: [2,3,1]
 # checkAns.invertTree( [] )                               # Ans: []
+
+-------------------------------------------------------------Answer Of This Question----------------------------------------------------------
+
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+    
+        if not root:
+            return
+        
+        temp = root.left
+        root.left = root.right
+        root.right = temp
+
+        self.invertTree(root.left)
+        self.invertTree(root.right)
+
+        return root
