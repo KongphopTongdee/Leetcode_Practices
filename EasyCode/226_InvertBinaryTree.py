@@ -16,17 +16,25 @@ class Solution:
             child node right: x.right
         """
         def outputTemplate( treeNodeDisplay ):
-            displayOutput = f" Head node: { treeNodeDisplay.val } \n child node left: { treeNodeDisplay.left.val } \n child node right: { treeNodeDisplay.right.val }  \n"
+            displayOutput = f" \n Head node: { treeNodeDisplay.val }"
+            if( treeNodeDisplay.left != None ):
+                displayOutput += f" \n child node left: { treeNodeDisplay.left.val }"
+            if( treeNodeDisplay.right != None ):
+                displayOutput += f" \n child node right: { treeNodeDisplay.right.val }"
             print( displayOutput )
             
         def findAllLeftTreeNode( inputTreeNode ):
-            while( ( inputTreeNode.left != None ) and ( inputTreeNode.val != 0 ) ):
+            idxCount = 0
+            while( ( inputTreeNode.val != 0 ) ):
                 outputTemplate( inputTreeNode )
                 if( inputTreeNode.right != None ):
-                    storeTreeNode.update( { "rigth" : inputTreeNode.right } )
-                inputTreeNode = inputTreeNode.left
-            
-            
+                    idxCount += 1
+                    storeTreeNode.update( { idxCount : inputTreeNode.right } )
+                if( inputTreeNode.left != None ):
+                    inputTreeNode = inputTreeNode.left
+                else:
+                    break
+                
         current = treeNodeInsert
         storeTreeNode = {  }
         findAllLeftTreeNode( current )
