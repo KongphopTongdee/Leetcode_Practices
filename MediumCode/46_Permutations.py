@@ -30,7 +30,7 @@ class Solution:
                     
     
     def permute( self, nums ):
-        pass
+        self.backTracking( nums )
     
 checkAns = Solution()
 checkAns.permute( [ 1, 2, 3 ] )
