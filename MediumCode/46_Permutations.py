@@ -22,15 +22,14 @@ class Solution:
     def __init__( self ):
         self.answer = []
     
-    def backTracking( self, inputArr ):
-        pass
+    def changePositionIdx( self, ):
         
     
    
                     
     
     def permute( self, nums ):
-        self.backTracking( nums )
+        answer = self.changePositionIdx( nums )
     
 checkAns = Solution()
 checkAns.permute( [ 1, 2, 3 ] )
