@@ -22,11 +22,21 @@ class Solution:
     def __init__( self ):
         self.answer = []
     
-    def changePositionIdx( self, ):
+    def changePositionIdx( self, inputArr ):
+        result = []
+        combineArr = []
         
+        def adaptFromBackTracking( start, current ):
+            
+            for idx in range( start, len( inputArr ) ):
+                
     
-   
-                    
+    
+                adaptFromBackTracking( idx + 1 )
+                
+        adaptFromBackTracking( 0, )
+    
+        return result
     
     def permute( self, nums ):
         answer = self.changePositionIdx( nums )
@@ -35,3 +45,4 @@ checkAns = Solution()
 checkAns.permute( [ 1, 2, 3 ] )
 # checkAns.permute( [ 0, 1 ] )
 # checkAns.permute( [ 1 ] )
+
