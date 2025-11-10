@@ -25,9 +25,9 @@ class Solution:
         visit = set()
         
         word = list( word )
-        word.pop( 0 )
+        # word.pop( 0 )
         nextChar = word[ 0 ]
-        insertOldChar = ""
+        insertOldChar = []
         
         
         def dfs( row, column, nextChar ):
@@ -35,9 +35,14 @@ class Solution:
                 return False
             if( ( row, column ) in visit ):
                 return False
-            if( ( board[ row, column ] == nextChar ) and ( len( word ) != 0 ) ):\
-                insertOldChar = [  ]
+            if( ( board[ row ][ column ] == nextChar ) and ( len( word ) != 0 ) ):
+                insertOldChar.append( word[ 0 ] )
                 word.pop( 0 )
+                
+                # condition for stop loop
+                if( len( word ) == 0 ):
+                    return True
+                    
                 nextChar = word[ 0 ]
             
             visit.add( ( row, column ) )
@@ -55,7 +60,8 @@ class Solution:
             if( dfs( row, column + 1, nextChar ) == True ):
                 return True
             
-            word.append( insertOldChar )
+            word = insertOldChar.extend( word )
+            insertOldChar = []
             
         startPosX, startPosY = startPos
         
